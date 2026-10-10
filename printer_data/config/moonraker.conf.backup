@@ -3,8 +3,27 @@ host: 0.0.0.0
 port: 7125
 klippy_uds_address: /home/wzsgptwj/printer_data/comms/klippy.sock
 
+[update_manager timelapse]
+type: git_repo
+primary_branch: main
+path: ~/moonraker-timelapse
+origin: https://github.com/mainsail-crew/moonraker-timelapse.git
+managed_services: klipper moonraker
+
 [file_manager]
 enable_object_processing: True
+
+[timelapse]
+##   Following basic configuration is default to most images and don't need
+##   to be changed in most scenarios. Only uncomment and change it if your
+##   Image differ from standart installations. In most common scenarios 
+##   a User only need [timelapse] in their configuration.
+#output_path: ~/timelapse/
+##   Directory where the generated video will be saved
+#frame_path: /tmp/timelapse/
+##   Directory where the temporary frames are saved
+#ffmpeg_binary_path: /usr/bin/ffmpeg
+##   Directory where ffmpeg is installed
 
 [authorization]
 trusted_clients:
@@ -62,3 +81,38 @@ origin: https://github.com/protoloft/klipper_z_calibration.git
 managed_services: klipper
 
 
+
+
+[update_manager cartographer_plugin]
+type: python
+channel: stable
+virtualenv: ~/klippy-env
+project_name: cartographer3d-plugin
+is_system_service: False
+managed_services: klipper
+info_tags: desc=Cartographer Plugin
+[update_manager klipper-backup]
+type: git_repo
+path: ~/klipper-backup
+origin: https://github.com/Staubgeborener/klipper-backup.git
+managed_services: moonraker
+primary_branch: main
+## Klippain Shake&Tune automatic update management
+[update_manager Klippain-ShakeTune]
+type: git_repo
+origin: https://github.com/Frix-x/klippain-shaketune.git
+path: ~/klippain_shaketune
+virtualenv: /home/wzsgptwj/klippy-env
+requirements: requirements.txt
+system_dependencies: system-dependencies.json
+primary_branch: main
+managed_services: klipper
+
+[update_manager klipper_tmc_autotune]
+type: git_repo
+channel: dev
+path: ~/klipper_tmc_autotune
+origin: https://github.com/andrewmcgr/klipper_tmc_autotune.git
+managed_services: klipper
+primary_branch: main
+install_script: install.sh
